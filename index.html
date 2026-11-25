@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080814">
+<title>MIYORA PAIR | WhatsApp Pairing</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#080814;color:#fff;font-family:Inter,Arial,sans-serif;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+body:before{content:"";position:fixed;width:350px;height:350px;background:#852cff;filter:blur(150px);opacity:.22;top:-130px;left:-100px;pointer-events:none}
+header{padding:25px 7%;display:flex;justify-content:space-between;align-items:center;position:relative}
+.logo{font-size:24px;font-weight:900;letter-spacing:2px;background:linear-gradient(90deg,#fff,#a66aff,#35dcff);color:transparent;background-clip:text}
+.online{font-size:10px;color:#5cffb7;background:#10291f;border:1px solid #285d45;padding:9px 13px;border-radius:30px}
+main{flex:1;display:flex;justify-content:center;align-items:center;padding:40px 18px;position:relative}
+.container{width:100%;max-width:460px;text-align:center}
+.tag{display:inline-block;border:1px solid #57368b;background:#1b1230;color:#c49bff;border-radius:30px;padding:9px 16px;font-size:10px;letter-spacing:2px;margin-bottom:22px}
+h1{font-size:clamp(42px,10vw,65px);font-weight:900;letter-spacing:-3px;background:linear-gradient(100deg,#fff,#ae77ff,#3de5ff);background-clip:text;color:transparent}
+.subtitle{color:#9292a9;font-size:13px;line-height:1.8;margin:13px 0 30px}
+.panel{background:linear-gradient(145deg,#19182e,#10101d);border:1px solid #36304f;border-radius:23px;padding:27px 23px;text-align:left;box-shadow:0 20px 70px #0008}
+.panel h2{font-size:17px;margin-bottom:9px}.panel p{font-size:12px;color:#9292a9;margin-bottom:23px}
+label{display:block;font-size:11px;color:#c9c5dc;margin-bottom:10px}
+.input{display:flex;align-items:center;background:#090916;border:1px solid #393452;border-radius:12px;padding:0 14px}
+.input:focus-within{border-color:#a15cff}
+.input span{color:#45ddff;font-weight:800;border-right:1px solid #393452;padding-right:12px}
+input{width:100%;background:none;outline:none;border:none;color:white;padding:17px 12px;font-size:15px}
+button{font-family:inherit;cursor:pointer}
+.generate{width:100%;padding:17px;border:0;border-radius:12px;margin-top:19px;color:white;font-weight:800;font-size:13px;background:linear-gradient(100deg,#7135d9,#a34fff,#218de5);transition:.2s}
+.generate:hover{filter:brightness(1.15)}.generate:disabled{opacity:.5;cursor:wait}
+#result{display:none;margin-top:20px;padding:20px;border:1px solid #24717a;background:#0c2026;border-radius:14px;text-align:center}
+#code{font-size:28px;color:#40eaff;letter-spacing:4px;font-weight:900;margin:15px 0;overflow-wrap:anywhere;white-space:pre-wrap}
+.copy{background:#17434b;border:1px solid #277888;padding:11px 25px;border-radius:9px;color:white;font-weight:700}
+#message{display:none;margin-top:15px;padding:13px;border-radius:10px;font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.error{background:#351920;border:1px solid #71313c;color:#ffaaaa}
+.help{background:#17172b;border:1px solid #373453;padding:19px;border-radius:14px;margin-top:22px;text-align:left}
+.help h3{font-size:13px;margin-bottom:14px}.help div{font-size:11px;color:#b1b0c4;margin-top:12px}.help b{color:#c29bff;margin-right:9px}
+footer{text-align:center;color:#73738c;font-size:10px;letter-spacing:1px;padding:22px;position:relative}
+footer strong{color:#b58aff}
+@media(max-width:380px){.panel{padding:20px 16px}}
+</style>
+</head>
+<body>
+<header><div class="logo">MIYORA.</div><div class="online">● SYSTEM ONLINE</div></header>
+<main><div class="container">
+<div class="tag">✦ WHATSAPP PAIRING PORTAL</div>
+<h1>MIYORA PAIR</h1>
+<div class="subtitle">Generate your WhatsApp pairing code.<br>Fast • Simple • Secure</div>
+<div class="panel">
+<h2>Generate Pairing Code</h2>
+<p>Enter your WhatsApp number with country code.</p>
+<form id="form">
+<label for="number">WHATSAPP NUMBER</label>
+<div class="input"><span>+</span><input id="number" type="tel" value="94776734030" placeholder="947XXXXXXXX" maxlength="16" autocomplete="tel" required></div>
+<button class="generate" id="generate" type="submit">GENERATE PAIR CODE →</button>
+</form>
+<div id="message" class="error" role="alert"></div>
+<div id="result" aria-live="polite"><small>YOUR PAIRING CODE</small><div id="code"></div><button class="copy" id="copy" type="button">COPY CODE</button></div>
+</div>
+<div class="help"><h3>HOW TO CONNECT</h3>
+<div><b>01</b> Enter your WhatsApp number with country code.</div>
+<div><b>02</b> Generate your pairing code.</div>
+<div><b>03</b> Open WhatsApp → Linked Devices.</div>
+<div><b>04</b> Select “Link with phone number”.</div>
+<div><b>05</b> Enter the code shown here.</div>
+</div></div></main>
+<footer>POWERED BY <strong>SASIYA MIYORA TEAM</strong></footer>
+<script>
+const form=document.getElementById("form");
+const numberInput=document.getElementById("number");
+const button=document.getElementById("generate");
+const result=document.getElementById("result");
+const codeBox=document.getElementById("code");
+const message=document.getElementById("message");
+const copyButton=document.getElementById("copy");
+
+function findCode(value, depth=0) {
+  if (depth > 8 || value == null) return null;
+  if (typeof value === "string") {
+    const s=value.trim();
+    try { const parsed=JSON.parse(s); if(parsed && typeof parsed==="object") return findCode(parsed,depth+1); } catch {}
+    const patterns=[
+      /(?:pairing[\s_-]*code|pair[\s_-]*code|code)\s*[:=]\s*["']?([A-Z0-9-]{4,24})/i,
+      /^\s*([A-Z0-9]{4,8}(?:[- ]?[A-Z0-9]{3,8})?)\s*$/
+    ];
+    for(const p of patterns){const m=s.match(p);if(m && /\d/.test(m[1])) return m[1].replace(/\s/g,"");}
+    return null;
+  }
+  if(Array.isArray(value)){for(const item of value){const found=findCode(item,depth+1);if(found)return found;}return null;}
+  if(typeof value==="object"){
+    const preferred=["pairingCode","pairing_code","pair_code","pairCode","code","pair","data","result","response","message"];
+    for(const key of preferred){if(value[key]!==undefined){const found=findCode(value[key],depth+1);if(found)return found;}}
+  }
+  return null;
+}
+function showError(text){message.textContent=text;message.style.display="block";result.style.display="none";}
+
+form.addEventListener("submit",async(event)=>{
+  event.preventDefault();
+  const phone=numberInput.value.replace(/[\s+()\-]/g,"");
+  if(!/^[1-9][0-9]{7,14}$/.test(phone)){showError("Enter a valid international phone number, including country code.");return;}
+  button.disabled=true;button.textContent="GENERATING...";
+  message.style.display="none";result.style.display="none";
+  try{
+    const response=await fetch("/api/pair?number="+encodeURIComponent(phone),{method:"GET",cache:"no-store"});
+    const payload=await response.json();
+    if(!response.ok || payload.success!==true){
+      const detail=payload.details;
+      throw new Error(typeof detail==="string"?detail:(payload.message||payload.error||"Pairing request failed."));
+    }
+    const pairCode=findCode(payload.data);
+    if(!pairCode){
+      throw new Error("The pairing API responded, but no recognizable code was found. Ask the site administrator to check the API response format.");
+    }
+    codeBox.textContent=pairCode;
+    result.style.display="block";
+  }catch(error){showError(error.message||"Unable to contact the pairing service.");}
+  finally{button.disabled=false;button.textContent="GENERATE PAIR CODE →";}
+});
+copyButton.addEventListener("click",async()=>{
+  try{await navigator.clipboard.writeText(codeBox.textContent);copyButton.textContent="COPIED ✓";setTimeout(()=>copyButton.textContent="COPY CODE",1800);}
+  catch{showError("Copy failed. Please select and copy the code manually.");}
+});
+</script>
+</body>
+</html>

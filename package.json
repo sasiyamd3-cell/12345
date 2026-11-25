@@ -1,0 +1,9 @@
+{
+  "name": "miyora-pair",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MIYORA WhatsApp pairing portal for Vercel",
+  "engines": {
+    "node": ">=20"
+  }
+}
