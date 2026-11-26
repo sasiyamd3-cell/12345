@@ -1,126 +1,475 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#080814">
-<title>MIYORA PAIR | WhatsApp Pairing</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MIYORA MD — Bot Portal</title>
+<meta name="description" content="Connect your Miyora MD WhatsApp bot or manage your bot settings." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Klee+One:wght@600&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#080814;color:#fff;font-family:Inter,Arial,sans-serif;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
-body:before{content:"";position:fixed;width:350px;height:350px;background:#852cff;filter:blur(150px);opacity:.22;top:-130px;left:-100px;pointer-events:none}
-header{padding:25px 7%;display:flex;justify-content:space-between;align-items:center;position:relative}
-.logo{font-size:24px;font-weight:900;letter-spacing:2px;background:linear-gradient(90deg,#fff,#a66aff,#35dcff);color:transparent;background-clip:text}
-.online{font-size:10px;color:#5cffb7;background:#10291f;border:1px solid #285d45;padding:9px 13px;border-radius:30px}
-main{flex:1;display:flex;justify-content:center;align-items:center;padding:40px 18px;position:relative}
-.container{width:100%;max-width:460px;text-align:center}
-.tag{display:inline-block;border:1px solid #57368b;background:#1b1230;color:#c49bff;border-radius:30px;padding:9px 16px;font-size:10px;letter-spacing:2px;margin-bottom:22px}
-h1{font-size:clamp(42px,10vw,65px);font-weight:900;letter-spacing:-3px;background:linear-gradient(100deg,#fff,#ae77ff,#3de5ff);background-clip:text;color:transparent}
-.subtitle{color:#9292a9;font-size:13px;line-height:1.8;margin:13px 0 30px}
-.panel{background:linear-gradient(145deg,#19182e,#10101d);border:1px solid #36304f;border-radius:23px;padding:27px 23px;text-align:left;box-shadow:0 20px 70px #0008}
-.panel h2{font-size:17px;margin-bottom:9px}.panel p{font-size:12px;color:#9292a9;margin-bottom:23px}
-label{display:block;font-size:11px;color:#c9c5dc;margin-bottom:10px}
-.input{display:flex;align-items:center;background:#090916;border:1px solid #393452;border-radius:12px;padding:0 14px}
-.input:focus-within{border-color:#a15cff}
-.input span{color:#45ddff;font-weight:800;border-right:1px solid #393452;padding-right:12px}
-input{width:100%;background:none;outline:none;border:none;color:white;padding:17px 12px;font-size:15px}
-button{font-family:inherit;cursor:pointer}
-.generate{width:100%;padding:17px;border:0;border-radius:12px;margin-top:19px;color:white;font-weight:800;font-size:13px;background:linear-gradient(100deg,#7135d9,#a34fff,#218de5);transition:.2s}
-.generate:hover{filter:brightness(1.15)}.generate:disabled{opacity:.5;cursor:wait}
-#result{display:none;margin-top:20px;padding:20px;border:1px solid #24717a;background:#0c2026;border-radius:14px;text-align:center}
-#code{font-size:28px;color:#40eaff;letter-spacing:4px;font-weight:900;margin:15px 0;overflow-wrap:anywhere;white-space:pre-wrap}
-.copy{background:#17434b;border:1px solid #277888;padding:11px 25px;border-radius:9px;color:white;font-weight:700}
-#message{display:none;margin-top:15px;padding:13px;border-radius:10px;font-size:12px;line-height:1.6;overflow-wrap:anywhere}
-.error{background:#351920;border:1px solid #71313c;color:#ffaaaa}
-.help{background:#17172b;border:1px solid #373453;padding:19px;border-radius:14px;margin-top:22px;text-align:left}
-.help h3{font-size:13px;margin-bottom:14px}.help div{font-size:11px;color:#b1b0c4;margin-top:12px}.help b{color:#c29bff;margin-right:9px}
-footer{text-align:center;color:#73738c;font-size:10px;letter-spacing:1px;padding:22px;position:relative}
-footer strong{color:#b58aff}
-@media(max-width:380px){.panel{padding:20px 16px}}
+  :root{
+    --ink: #05070f;
+    --ink-2: #0a1226;
+    --ink-3: #111f3d;
+    --sakura: #b06bff;
+    --sakura-deep: #7a2bff;
+    --lantern: #d8a3ff;
+    --lantern-soft: #e9d4ff;
+    --paper: #f3ecff;
+    --muted: #9a8fbd;
+    --line: rgba(176,107,255,0.18);
+    --danger: #ff8a8a;
+    --good: #9be8b0;
+  }
+
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+
+  body{
+    background: radial-gradient(ellipse 120% 80% at 50% -10%, #2a1550 0%, var(--ink) 55%, #05070f 100%);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .stage{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6vh 20px 8vh;
+  }
+
+  .brand{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+  .kanji-badge{
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: linear-gradient(160deg, var(--ink-3), var(--ink-2));
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Klee One', cursive;
+    font-size: 22px;
+    color: var(--sakura);
+    flex-shrink: 0;
+    overflow: hidden;
+    box-shadow: 0 0 16px rgba(176,107,255,0.35) inset;
+  }
+  .kanji-badge img{ width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+  h1.wordmark{
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 800;
+    font-size: clamp(26px, 5vw, 36px);
+    letter-spacing: 0.02em;
+    margin: 0;
+    background: linear-gradient(100deg, var(--paper) 25%, var(--sakura) 70%, var(--lantern) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 30px rgba(176,107,255,0.25);
+  }
+
+  .tagline{
+    color: var(--muted);
+    font-size: 14px;
+    text-align: center;
+    max-width: 390px;
+    margin: 10px 0 32px;
+    line-height: 1.5;
+  }
+
+  .card{
+    width: 100%;
+    max-width: 460px;
+    background: linear-gradient(165deg, var(--ink-2), var(--ink) 130%);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 28px 26px 30px;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.55);
+  }
+
+  .eyebrow{
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--lantern);
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .action-card{
+    background: var(--ink-3);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 18px 18px 20px;
+    margin-bottom: 14px;
+    transition: border-color 0.16s ease, transform 0.16s ease;
+  }
+  .action-card:hover{
+    border-color: rgba(176,107,255,0.45);
+    transform: translateY(-1px);
+  }
+  .action-title{
+    font-family: 'Unbounded', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--paper);
+    margin: 0 0 6px;
+  }
+  .action-desc{
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 14px;
+    line-height: 1.45;
+  }
+
+  label.field-label{
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .field{ margin-bottom: 16px; }
+
+  input{
+    width: 100%;
+    background: var(--ink-3);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    color: var(--paper);
+    font-family: 'Space Mono', monospace;
+    font-size: 15px;
+    padding: 13px 14px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  input::placeholder{ color: #6f5f94; }
+  input:focus{
+    border-color: var(--sakura);
+    box-shadow: 0 0 0 3px rgba(122,43,255,0.22);
+  }
+
+  .hint{
+    font-size: 12px;
+    color: var(--muted);
+    margin: 8px 0 0;
+    line-height: 1.45;
+  }
+
+  .btn{
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 18px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #fff;
+    background: linear-gradient(120deg, var(--sakura) 0%, var(--sakura-deep) 100%);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+    box-shadow: 0 10px 28px -10px rgba(122,43,255,0.75);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+  .btn:hover{ transform: translateY(-1px); }
+  .btn:active{ transform: translateY(0); }
+  .btn:disabled{ opacity: 0.6; cursor: default; transform: none; }
+
+  .btn.secondary{
+    background: transparent;
+    border: 1px solid rgba(216,163,255,0.4);
+    color: var(--lantern-soft);
+    box-shadow: none;
+  }
+  .btn.secondary:hover{ background: rgba(216,163,255,0.1); }
+
+  .btn:focus-visible, input:focus-visible{
+    outline: 2px solid var(--lantern);
+    outline-offset: 2px;
+  }
+
+  .spinner{
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    vertical-align: -2px;
+    animation: spin-loader 0.7s linear infinite;
+  }
+  @keyframes spin-loader{ to{ transform: rotate(360deg); } }
+
+  .msg{
+    margin-top: 16px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: none;
+  }
+  .msg.show{ display: block; }
+  .msg.error{ background: rgba(255,138,138,0.1); color: var(--danger); border: 1px solid rgba(255,138,138,0.25); }
+  .msg.good{ background: rgba(155,232,176,0.1); color: var(--good); border: 1px solid rgba(155,232,176,0.25); }
+
+  .code-box{
+    display: none;
+    margin-top: 18px;
+    background: var(--ink-3);
+    border: 1px solid rgba(216,163,255,0.35);
+    border-radius: 14px;
+    padding: 18px 16px;
+    text-align: center;
+  }
+  .code-box.show{ display: block; }
+  .code-label{
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--lantern);
+    margin-bottom: 8px;
+  }
+  .code-value{
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(24px, 6vw, 30px);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--paper);
+    margin: 4px 0 14px;
+    user-select: all;
+  }
+
+  .status-pill{
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--good);
+    background: rgba(155,232,176,0.1);
+    border: 1px solid rgba(155,232,176,0.25);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  footer{
+    margin-top: 32px;
+    color: var(--muted);
+    font-size: 12.5px;
+    text-align: center;
+  }
+  footer .mark{ color: var(--sakura); }
+
+  #dashboardView, #pairingView{ display: none; width: 100%; max-width: 460px; }
+  #dashboardView.show, #pairingView.show{ display: block; }
 </style>
 </head>
 <body>
-<header><div class="logo">MIYORA.</div><div class="online">● SYSTEM ONLINE</div></header>
-<main><div class="container">
-<div class="tag">✦ WHATSAPP PAIRING PORTAL</div>
-<h1>MIYORA PAIR</h1>
-<div class="subtitle">Generate your WhatsApp pairing code.<br>Fast • Simple • Secure</div>
-<div class="panel">
-<h2>Generate Pairing Code</h2>
-<p>Enter your WhatsApp number with country code.</p>
-<form id="form">
-<label for="number">WHATSAPP NUMBER</label>
-<div class="input"><span>+</span><input id="number" type="tel" value="94776734030" placeholder="947XXXXXXXX" maxlength="16" autocomplete="tel" required></div>
-<button class="generate" id="generate" type="submit">GENERATE PAIR CODE →</button>
-</form>
-<div id="message" class="error" role="alert"></div>
-<div id="result" aria-live="polite"><small>YOUR PAIRING CODE</small><div id="code"></div><button class="copy" id="copy" type="button">COPY CODE</button></div>
+
+<div class="stage">
+
+  <div class="brand">
+    <div class="kanji-badge" aria-hidden="true">
+      <img src="https://raw.githubusercontent.com/NimeshMihiranga-Neno/cartoon-web/main/18d7513834fe1dcc00b6807bb6174794.jpg" alt="Miyora MD logo" onerror="this.style.display='none'; this.parentElement.textContent='桜';" />
+    </div>
+    <h1 class="wordmark">MIYORA MD</h1>
+  </div>
+  <p class="tagline">Connect your WhatsApp bot via pairing code or customize your session settings.</p>
+
+  <!-- ===================== DASHBOARD VIEW ===================== -->
+  <div id="dashboardView" class="card show">
+    <div class="eyebrow">
+      <span>Dashboard</span>
+      <span class="status-pill">● Online</span>
+    </div>
+
+    <div class="action-card">
+      <h2 class="action-title">Get Pairing Code</h2>
+      <p class="action-desc">Link your WhatsApp number to Miyora MD using an 8-character pairing code.</p>
+      <button id="openPairBtn" class="btn" type="button">Get Pairing Code</button>
+    </div>
+
+    <div class="action-card" style="margin-bottom:0;">
+      <h2 class="action-title">Change Bot Settings</h2>
+      <p class="action-desc">Update bot name, prefix, reply mode, menu logo, and anti-delete / anti-edit protection.</p>
+      <a href="https://settings.miyora-mini.site" class="btn secondary">Open Settings Panel</a>
+    </div>
+  </div>
+
+  <!-- ===================== PAIRING VIEW ===================== -->
+  <div id="pairingView" class="card">
+    <div class="eyebrow">
+      <span>WhatsApp Pairing</span>
+      <span style="color:var(--muted);">8-Digit Code</span>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="pairNumber">WhatsApp number</label>
+      <input id="pairNumber" type="tel" inputmode="numeric" placeholder="94767475809" autocomplete="off" />
+      <p class="hint">Enter your full international phone number with country code (digits only, no + or spaces).</p>
+    </div>
+
+    <button id="getCodeBtn" class="btn" type="button">Get Pairing Code</button>
+    <button id="backDashBtn" class="btn secondary" type="button" style="margin-top:10px;">← Back to Dashboard</button>
+
+    <div id="pairMsg" class="msg" role="status"></div>
+
+    <div id="codeBox" class="code-box">
+      <div class="code-label">Your Pairing Code</div>
+      <div id="pairCodeText" class="code-value">--------</div>
+      <button id="copyCodeBtn" class="btn secondary" type="button" style="padding:11px 14px; font-size:13.5px;">Copy Pairing Code</button>
+    </div>
+  </div>
+
+  <footer>
+    <span class="mark"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="vertical-align:-2px;"><circle cx="12" cy="7" r="3"/><circle cx="17" cy="10.5" r="3"/><circle cx="15" cy="16" r="3"/><circle cx="9" cy="16" r="3"/><circle cx="7" cy="10.5" r="3"/></svg></span> Miyora MD — Multi-Device WhatsApp Bot Portal. Built by Sasinda Denuwan.
+  </footer>
+
 </div>
-<div class="help"><h3>HOW TO CONNECT</h3>
-<div><b>01</b> Enter your WhatsApp number with country code.</div>
-<div><b>02</b> Generate your pairing code.</div>
-<div><b>03</b> Open WhatsApp → Linked Devices.</div>
-<div><b>04</b> Select “Link with phone number”.</div>
-<div><b>05</b> Enter the code shown here.</div>
-</div></div></main>
-<footer>POWERED BY <strong>SASIYA MIYORA TEAM</strong></footer>
+
 <script>
-const form=document.getElementById("form");
-const numberInput=document.getElementById("number");
-const button=document.getElementById("generate");
-const result=document.getElementById("result");
-const codeBox=document.getElementById("code");
-const message=document.getElementById("message");
-const copyButton=document.getElementById("copy");
+(function(){
+  const dashboardView = document.getElementById('dashboardView');
+  const pairingView = document.getElementById('pairingView');
 
-function findCode(value, depth=0) {
-  if (depth > 8 || value == null) return null;
-  if (typeof value === "string") {
-    const s=value.trim();
-    try { const parsed=JSON.parse(s); if(parsed && typeof parsed==="object") return findCode(parsed,depth+1); } catch {}
-    const patterns=[
-      /(?:pairing[\s_-]*code|pair[\s_-]*code|code)\s*[:=]\s*["']?([A-Z0-9-]{4,24})/i,
-      /^\s*([A-Z0-9]{4,8}(?:[- ]?[A-Z0-9]{3,8})?)\s*$/
-    ];
-    for(const p of patterns){const m=s.match(p);if(m && /\d/.test(m[1])) return m[1].replace(/\s/g,"");}
-    return null;
-  }
-  if(Array.isArray(value)){for(const item of value){const found=findCode(item,depth+1);if(found)return found;}return null;}
-  if(typeof value==="object"){
-    const preferred=["pairingCode","pairing_code","pair_code","pairCode","code","pair","data","result","response","message"];
-    for(const key of preferred){if(value[key]!==undefined){const found=findCode(value[key],depth+1);if(found)return found;}}
-  }
-  return null;
-}
-function showError(text){message.textContent=text;message.style.display="block";result.style.display="none";}
+  const openPairBtn = document.getElementById('openPairBtn');
+  const backDashBtn = document.getElementById('backDashBtn');
+  const pairNumberInput = document.getElementById('pairNumber');
+  const getCodeBtn = document.getElementById('getCodeBtn');
+  const pairMsg = document.getElementById('pairMsg');
+  const codeBox = document.getElementById('codeBox');
+  const pairCodeText = document.getElementById('pairCodeText');
+  const copyCodeBtn = document.getElementById('copyCodeBtn');
 
-form.addEventListener("submit",async(event)=>{
-  event.preventDefault();
-  const phone=numberInput.value.replace(/[\s+()\-]/g,"");
-  if(!/^[1-9][0-9]{7,14}$/.test(phone)){showError("Enter a valid international phone number, including country code.");return;}
-  button.disabled=true;button.textContent="GENERATING...";
-  message.style.display="none";result.style.display="none";
-  try{
-    const response=await fetch("/api/pair?number="+encodeURIComponent(phone),{method:"GET",cache:"no-store"});
-    const payload=await response.json();
-    if(!response.ok || payload.success!==true){
-      const detail=payload.details;
-      throw new Error(typeof detail==="string"?detail:(payload.message||payload.error||"Pairing request failed."));
+  let currentCode = '';
+
+  function showView(viewName){
+    if(viewName === 'pair'){
+      dashboardView.classList.remove('show');
+      pairingView.classList.add('show');
+      pairNumberInput.focus();
+    } else {
+      pairingView.classList.remove('show');
+      dashboardView.classList.add('show');
     }
-    const pairCode=findCode(payload.data);
-    if(!pairCode){
-      throw new Error("The pairing API responded, but no recognizable code was found. Ask the site administrator to check the API response format.");
+  }
+
+  function showMsg(text, kind){
+    pairMsg.textContent = text;
+    pairMsg.className = 'msg show ' + kind;
+  }
+
+  function hideMsg(){
+    pairMsg.className = 'msg';
+  }
+
+  function extractCode(payload){
+    if(!payload) return '';
+    if(typeof payload === 'string') return payload.trim();
+    if(typeof payload === 'object'){
+      return String(
+        payload.code ||
+        payload.pairingCode ||
+        payload.pairCode ||
+        payload.data?.code ||
+        payload.data?.pairingCode ||
+        ''
+      ).trim();
     }
-    codeBox.textContent=pairCode;
-    result.style.display="block";
-  }catch(error){showError(error.message||"Unable to contact the pairing service.");}
-  finally{button.disabled=false;button.textContent="GENERATE PAIR CODE →";}
-});
-copyButton.addEventListener("click",async()=>{
-  try{await navigator.clipboard.writeText(codeBox.textContent);copyButton.textContent="COPIED ✓";setTimeout(()=>copyButton.textContent="COPY CODE",1800);}
-  catch{showError("Copy failed. Please select and copy the code manually.");}
-});
+    return '';
+  }
+
+  async function requestPairingCode(){
+    const number = pairNumberInput.value.replace(/[^0-9]/g, '');
+    hideMsg();
+    codeBox.classList.remove('show');
+    currentCode = '';
+
+    if(!/^[1-9][0-9]{7,14}$/.test(number)){
+      showMsg('Enter a valid international phone number with country code (e.g. 94767475809).', 'error');
+      return;
+    }
+
+    getCodeBtn.disabled = true;
+    getCodeBtn.innerHTML = '<span class="spinner"></span>Generating code…';
+
+    try{
+      const res = await fetch('/api/pair?number=' + encodeURIComponent(number), {
+        method: 'GET',
+        cache: 'no-store'
+      });
+      const json = await res.json().catch(() => ({}));
+
+      if(!res.ok || !json.success){
+        showMsg(json.message || 'Could not generate pairing code. Try again.', 'error');
+        return;
+      }
+
+      const code = extractCode(json.data);
+      if(!code){
+        showMsg('Pairing request sent, but no code was returned. Please try again.', 'error');
+        return;
+      }
+
+      currentCode = code;
+      pairCodeText.textContent = code;
+      codeBox.classList.add('show');
+      showMsg('Open WhatsApp → Linked Devices → Link with phone number, and enter this code.', 'good');
+    } catch(err){
+      showMsg('Could not connect to the pairing service. Please try again.', 'error');
+    } finally{
+      getCodeBtn.disabled = false;
+      getCodeBtn.textContent = 'Get Pairing Code';
+    }
+  }
+
+  copyCodeBtn.addEventListener('click', async () => {
+    if(!currentCode) return;
+    try{
+      await navigator.clipboard.writeText(currentCode);
+      copyCodeBtn.textContent = 'Copied!';
+      setTimeout(() => { copyCodeBtn.textContent = 'Copy Pairing Code'; }, 2000);
+    } catch(_){
+      showMsg('Select and copy the code manually: ' + currentCode, 'good');
+    }
+  });
+
+  openPairBtn.addEventListener('click', () => {
+    history.replaceState(null, '', '#pair');
+    showView('pair');
+  });
+
+  backDashBtn.addEventListener('click', () => {
+    history.replaceState(null, '', window.location.pathname);
+    showView('dashboard');
+  });
+
+  getCodeBtn.addEventListener('click', requestPairingCode);
+  pairNumberInput.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter') requestPairingCode();
+  });
+
+  if(window.location.hash === '#pair'){
+    showView('pair');
+  }
+})();
 </script>
+
 </body>
 </html>
